@@ -46,8 +46,9 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         emit(SignUpError(errorMessage: response.data['message']));
       }
     } on DioException catch(e){
-      print(e);
-      emit(SignUpError(errorMessage: e.response!.statusCode.toString()));
+      final errorMessage = e.response!.data['errors']['email'] ?? e.response!.data['errors']['password'];
+
+      emit(SignUpError(errorMessage: errorMessage));
 
     }
 
@@ -111,7 +112,8 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
 
     } on DioException catch(e){
       print(e);
-      emit(LogInError(errorMessage: e.toString()));
+      final errorResponse = e.response!.data['message'];
+      emit(LogInError(errorMessage: errorResponse));
 
     }
 
