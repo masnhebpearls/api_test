@@ -46,9 +46,15 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         emit(SignUpError(errorMessage: response.data['message']));
       }
     } on DioException catch(e){
-      final errorMessage = e.response!.data['errors']['email'] ?? e.response!.data['errors']['password'];
 
-      emit(SignUpError(errorMessage: errorMessage));
+      if (e.response != null){
+        final errorMessage = e.response!.data['errors']['email'] ?? e.response!.data['errors']['password'];
+        emit(SignUpError(errorMessage: errorMessage));
+      }
+      else{
+        emit(SignUpError(errorMessage: "connection error"));
+      }
+
 
     }
 
@@ -99,7 +105,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           'Content-Type': 'application/json', // set headers
         }),
       );
-
+      print(" response is ${response.data}");
       if (response.data['success']==true){
         SharedPreferenceHelper().storeToken(response.data['accessToken']);
         SharedPreferenceHelper().storeRefreshToken(response.data['refreshToken']);
@@ -111,9 +117,18 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       }
 
     } on DioException catch(e){
-      print(e);
-      final errorResponse = e.response!.data['message'];
-      emit(LogInError(errorMessage: errorResponse));
+      print("error is ${e.response}");
+      if (e.response != null){
+        print("error is ${e.response!.data}");
+        final errorResponse =  e.response!.data['message'] ?? e.response!.data['errors']['message'];
+        print("obtained error message is $errorResponse");
+        emit(LogInError(errorMessage: errorResponse));
+      }
+      else{
+        emit(LogInError(errorMessage: "Connection error"));
+
+      }
+
 
     }
 
