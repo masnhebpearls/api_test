@@ -35,10 +35,8 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           contentType: Headers.jsonContentType,
         ),
       );
-      print(response.data.toString());
       if (response.data['message']== 'User registration successfull'){
         SharedPreferenceHelper().storeEmail(event.email);
-        print("response is $response");
         emit(SignedUpState());
 
       }
@@ -66,7 +64,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
   FutureOr<void> logInInitialEvent(LogInInitialEvent event, Emitter<RequestState> emit) async {
     dio.interceptors.add(AuthInterceptor());
     var tokens = await SharedPreferenceHelper().getTokens();
-    print(tokens);
     if (tokens[0] !='' && tokens[1] != ''){
       emit(LoggedInState());
     }
@@ -79,7 +76,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
   FutureOr<void> alreadySignedUpEvent(AlreadySignedUpEvent event, Emitter<RequestState> emit) async {
     dio.interceptors.add(AuthInterceptor());
     var email = await SharedPreferenceHelper().getEmail();
-    print("email is $email");
     if (email != null){
       emit(SignedUpState());
     }
@@ -105,7 +101,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           'Content-Type': 'application/json', // set headers
         }),
       );
-      print(" response is ${response.data}");
       if (response.data['success']==true){
         SharedPreferenceHelper().storeToken(response.data['accessToken']);
         SharedPreferenceHelper().storeRefreshToken(response.data['refreshToken']);
@@ -117,11 +112,8 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       }
 
     } on DioException catch(e){
-      print("error is ${e.response}");
       if (e.response != null){
-        print("error is ${e.response!.data}");
         final errorResponse =  e.response!.data['message'] ?? e.response!.data['errors']['message'];
-        print("obtained error message is $errorResponse");
         emit(LogInError(errorMessage: errorResponse));
       }
       else{
@@ -143,13 +135,16 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
 
     try {
       final response = await dio.get(checkAuthorization);
-      final data = response.data;
-      emit(TokenValidState());
-      print("response is $data");
+      if(response.data !=null){
+        emit(TokenValidState());
+      }
+      else{
+        SharedPreferenceHelper().removeToken();
+        emit(SignUpState());
+      }
     } catch (e) {
       SharedPreferenceHelper().removeToken();
       emit(SignUpState());
-      print("Error: $e");
       // Handle error as needed, e.g., emit an error state
     }
   }
