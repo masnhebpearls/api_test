@@ -27,12 +27,12 @@ class _HomePageState extends State<HomePage> {
       child: Scaffold(
         body: BlocConsumer<RequestBloc, RequestState>(
           listener: (context, state) {
+            // when already signed up, navigate to login page
             if(state is SignUpState){
-
               Navigator.pushAndRemoveUntil(context,
                   MaterialPageRoute(builder: (context)=> const LogIn()), (route)=> false);
             }
-
+            // view snack bar to show if it has valid token
             if (state is TokenValidState){
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -57,13 +57,17 @@ class _HomePageState extends State<HomePage> {
                           (route)=>false
                       );
                     },
-                    icon: const Icon(FontAwesomeIcons.signOut, color: Colors.black, size: 40,),
+                    icon: const Icon(FontAwesomeIcons.arrowRightFromBracket, color: Colors.black, size: 30,),
                   ),
 
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(width*0.2,
-                      height*0.3, width*0.2, 0),
+                  padding: EdgeInsets.fromLTRB(
+                      width*0.2,
+                      height*0.3,
+                      width*0.2,
+                      0
+                  ),
                   child: Center(
                     child: InkWell(
                       onTap: (){
@@ -71,13 +75,13 @@ class _HomePageState extends State<HomePage> {
                       },
                       child: Container(
                         width: width*0.6,
-                        height: height*0.1,
+                        height: height*0.085,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(width*0.075),
                             color: Colors.amber
                         ),
                         child: const Center(
-                          child: Text("Check refresh token", style: buttonTextStyle,),
+                          child: Text("Check refresh token", style: buttonTextStyle),
                         ),
                       ),
                     ),

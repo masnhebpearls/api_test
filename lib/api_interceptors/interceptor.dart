@@ -8,11 +8,9 @@ class AuthInterceptor extends Interceptor {
       final token = await SharedPreferenceHelper().getTokens();
       if (token[0] != '') {
         options.headers['Authorization'] = 'Bearer ${token[0]}';
-        //
       }
     } catch (e) {
       print('Error getting token: $e');
-      // Handle error as needed
     }
     super.onRequest(options, handler);
   }
