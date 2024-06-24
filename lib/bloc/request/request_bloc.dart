@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:test_token/api_interceptors/api_class.dart';
 import 'package:test_token/bloc/request/request_state.dart';
 import 'package:test_token/constants/constant_class.dart';
 import 'package:test_token/database/shared_preference.dart';
-import '../../api_interceptors/interceptor.dart';
+import '../../api/api_class.dart';
+import '../../api/interceptor.dart';
 import 'request_event.dart';
 
 class RequestBloc extends Bloc<RequestEvent, RequestState> {
