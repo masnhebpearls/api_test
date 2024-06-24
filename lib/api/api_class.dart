@@ -7,6 +7,7 @@ import 'interceptor.dart';
 class ApiRequest {
   final Dio dio = Dio();
 
+  ///sign up using [signupUrl] with relevant response with respect to status of signup
   Future<String> signUp(String userName, String email, String password,
       String repeatPassword) async {
     try {
@@ -42,7 +43,7 @@ class ApiRequest {
     }
   }
 
-
+  ///login using [signInUrl] with relevant response based on status
   Future<String> logIn(String email, String password) async {
     dio.interceptors.add(AuthInterceptor());
     try{
@@ -78,6 +79,7 @@ class ApiRequest {
     }
   }
 
+  /// check the validation of refresh token which is stored in shared preference
   Future<String> checkAuthorization() async {
     dio.interceptors.add(AuthInterceptor());
     try {
@@ -94,8 +96,4 @@ class ApiRequest {
       return ConstantClass.invalidToken;
     }
   }
-
-
-
-
 }
