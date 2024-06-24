@@ -46,7 +46,8 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     } on DioException catch(e){
 
       if (e.response != null){
-        final errorMessage = e.response!.data['errors']['email'] ?? e.response!.data['errors']['password'];
+        print(e.response!.data);
+        final errorMessage = e.response!.data['errors']['email'] ?? e.response!.data['errors']['password'] ?? e.response!.data['errors']['userName'];
         emit(SignUpError(errorMessage: errorMessage));
       }
       else{
