@@ -37,7 +37,7 @@ class ApiRequest {
         return errorMessage;
       }
       else {
-        return "connection error";
+        return ConstantClass.connectionError;
       }
     }
   }

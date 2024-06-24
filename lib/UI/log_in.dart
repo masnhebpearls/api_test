@@ -6,6 +6,7 @@ import 'package:test_token/UI/sign_up.dart';
 import 'package:test_token/bloc/request/request_bloc.dart';
 import 'package:test_token/bloc/request/request_event.dart';
 import 'package:test_token/bloc/request/request_state.dart';
+import 'package:test_token/constants/constant_class.dart';
 import 'package:test_token/database/shared_preference.dart';
 
 import '../constants/all_global_constants.dart';
@@ -37,12 +38,13 @@ class _LogInState extends State<LogIn> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             backgroundColor: Colors.white,
-            content: Text(state.errorMessage,style: buttonTextStyle,)
+            content: Text(state.errorMessage,style: buttonTextStyle)
         ),
       );
     }
     if (state is LoggedInState){
-      Navigator.pushAndRemoveUntil(context,
+      Navigator.pushAndRemoveUntil(
+          context,
           MaterialPageRoute(builder: (context)=> const HomePage()),
               (route)=>false
       );
@@ -66,10 +68,10 @@ class _LogInState extends State<LogIn> {
                   child: TextFormField(
                     validator: (val){
                       if(val!.length < 5){
-                        return "invalid email length";
+                        return ConstantClass.emailLengthError;
                       }
                       else if (!(val.contains('@') || !val.contains('.'))){
-                        return "invalid email";
+                        return ConstantClass.invalidEmailError;
                       }
                       else{
                         return null;
@@ -78,7 +80,7 @@ class _LogInState extends State<LogIn> {
                     },
                     controller: _emailController,
                     decoration: InputDecoration(
-                        hintText: "email",
+                        hintText: ConstantClass.emailHeader,
                         prefixIcon: const Icon(Icons.email),
                         border: textFieldDecoration.copyWith(
                             borderRadius: BorderRadius.circular(width*0.075)
@@ -97,7 +99,7 @@ class _LogInState extends State<LogIn> {
                   child: TextFormField(
                     validator: (val){
                       if (val!.length < 5){
-                        return "password must be at least 5 characters long";
+                        return ConstantClass.passwordLengthError;
                       }
                       else {
                         return null;
@@ -106,7 +108,7 @@ class _LogInState extends State<LogIn> {
                     obscureText: !seePassword,
                     controller: _passwordController,
                     decoration: InputDecoration(
-                        hintText: "password",
+                        hintText: ConstantClass.passwordHeader,
                         prefixIcon: const Icon(Icons.password),
                         suffixIcon:  IconButton(
                           icon: seePassword ? const Icon(Icons.remove_red_eye): const Icon(FontAwesomeIcons.eyeSlash),
@@ -149,7 +151,7 @@ class _LogInState extends State<LogIn> {
                         color: Colors.amber
                     ),
                     child: const Center(
-                      child: Text("Login", style: buttonTextStyle,),
+                      child: Text(ConstantClass.logInButton, style: buttonTextStyle,),
                     ),
                   ),
                 ),
@@ -161,7 +163,7 @@ class _LogInState extends State<LogIn> {
                   Navigator.pushAndRemoveUntil(context,
                       MaterialPageRoute(builder: (context)=> const SignUpPage()),
                           (route)=> false);
-                }, child: Text("Do not have a account, Sign up ?", style: buttonTextStyle.copyWith(
+                }, child: Text(ConstantClass.signUp, style: buttonTextStyle.copyWith(
                   decoration: TextDecoration.underline,
                     fontSize: 18,
                   fontWeight: FontWeight.w500

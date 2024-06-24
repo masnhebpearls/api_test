@@ -6,8 +6,7 @@ import 'package:test_token/bloc/request/request_bloc.dart';
 import 'package:test_token/bloc/request/request_event.dart';
 import 'package:test_token/bloc/request/request_state.dart';
 import 'package:test_token/constants/all_global_constants.dart';
-import 'package:test_token/database/shared_preference.dart';
-
+import 'package:test_token/constants/constant_class.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -64,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: TextFormField(
                     validator: (val){
                       if(val!.length < 3){
-                        return "username should be at least 3 characters";
+                        return ConstantClass.userNameLengthError;
                       }
                       else{
                         return null;
@@ -73,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     controller: _usernameController,
                     decoration: InputDecoration(
-                      hintText: "username",
+                      hintText: ConstantClass.userNameHeader,
                       prefixIcon: const Icon(Icons.person),
                       border: textFieldDecoration.copyWith(
                         borderRadius: BorderRadius.circular(width*0.075)
@@ -94,10 +93,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   child: TextFormField(
                     validator: (val){
                       if(val!.length < 5){
-                        return "invalid email length";
+                        return ConstantClass.emailLengthError;
                       }
                       else if (!(val.contains('@') || !val.contains('.'))){
-                        return "invalid email";
+                        return ConstantClass.invalidEmailError;
                       }
                       else{
                         return null;
@@ -106,7 +105,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     controller: _emailController,
                     decoration: InputDecoration(
-                      hintText: "email",
+                      hintText: ConstantClass.emailHeader,
                       prefixIcon: const Icon(Icons.email),
                         border: textFieldDecoration.copyWith(
                             borderRadius: BorderRadius.circular(width*0.075)
@@ -125,7 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: TextFormField(
                   validator: (val){
                     if (val!.length < 5){
-                      return "password must be at least 5 characters long";
+                      return ConstantClass.passwordLengthError;
                     }
                     else {
                       return null;
@@ -134,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   obscureText: !seePassword,
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    hintText: "password",
+                    hintText: ConstantClass.passwordHeader,
                     prefixIcon: const Icon(Icons.password),
                       suffixIcon:  IconButton(
                         icon: seePassword ? const Icon(Icons.remove_red_eye): const Icon(FontAwesomeIcons.eyeSlash),
@@ -163,7 +162,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     obscureText: !seeRepeatPassword,
                     validator: (val){
                       if (val! != _passwordController.text){
-                        return "password does not match";
+                        return ConstantClass.passwordUnmatchedError;
                       }
                       else {
                         return null;
@@ -171,7 +170,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     },
                     controller: _reEnterPasswordController,
                     decoration: InputDecoration(
-                      hintText: "re enter password",
+                      hintText: ConstantClass.repeatPasswordHead,
                         prefixIcon: const Icon(Icons.password),
                         suffixIcon:  IconButton(
                           icon: seeRepeatPassword ? const Icon(Icons.remove_red_eye): const Icon(FontAwesomeIcons.eyeSlash),
@@ -216,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     color: Colors.amber
                   ),
                   child: const Center(
-                    child: Text("Sign up", style: buttonTextStyle,),
+                    child: Text(ConstantClass.signUpButton, style: buttonTextStyle,),
                   ),
                 ),
               ),
@@ -227,7 +226,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder: (context)=> const LogIn()),
                     (route)=> false);
-              }, child: Text("Already have a account, Log in ? ", style: buttonTextStyle.copyWith(
+              }, child: Text(ConstantClass.login, style: buttonTextStyle.copyWith(
                 fontSize: 18
               ),))
             ],

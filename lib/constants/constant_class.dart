@@ -16,8 +16,33 @@ class ConstantClass {
   static const validToken = "valid token";
   static const invalidToken = "invalid token";
 
-
   static const jsonHeader = 'application/json';
+
+  static const userNameHeader = 'userName';
+  static const emailHeader = 'email';
+  static const passwordHeader = 'password';
+  static const repeatPasswordHeader = 'repeat_password';
+  static const repeatPasswordHead= "re enter password";
+
+  static const errorHeader = 'errors';
+  static const accessTokenHeader = 'accessToken';
+  static const refreshTokenHeader = 'refreshToken';
+
+  static const emailLengthError = "invalid email length";
+  static const invalidEmailError = "invalid email";
+
+  static const userNameLengthError = "username should be at least 3 characters";
+
+
+  static const passwordLengthError = "password must be at least 5 characters long";
+  static const passwordUnmatchedError = "password does not match";
+
+  static const signUp = "Do not have a account, Sign up ?";
+  static const login = "Already have a account, Log in ? ";
+
+  static const signUpButton = "Sign up";
+  static const logInButton = "Log in";
+  static const checkTokenButton = "Check refresh token";
 
 
 

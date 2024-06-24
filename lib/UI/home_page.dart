@@ -8,6 +8,7 @@ import 'package:test_token/bloc/request/request_state.dart';
 import 'package:test_token/database/shared_preference.dart';
 
 import '../constants/all_global_constants.dart';
+import '../constants/constant_class.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                     backgroundColor: Colors.white,
-                    content: Text("Valid token",style: buttonTextStyle,)
+                    content: Text(ConstantClass.validToken,style: buttonTextStyle,)
                 ),
               );
             }
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.amber
                         ),
                         child: const Center(
-                          child: Text("Check refresh token", style: buttonTextStyle),
+                          child: Text(ConstantClass.checkTokenButton, style: buttonTextStyle),
                         ),
                       ),
                     ),
